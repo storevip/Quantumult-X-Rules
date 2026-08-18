@@ -1,0 +1,122 @@
+# ==================================================
+# Quantumult X - AI Rules
+# https://github.com/storevip/Quantumult-X-Rules
+# Overseas AI Services Routing Rules
+# ==================================================
+
+# --------------------
+# OpenAI / ChatGPT
+# --------------------
+host-suffix, openai.com, proxy
+host-suffix, chatgpt.com, proxy
+host-suffix, oaistatic.com, proxy
+host-suffix, oaiusercontent.com, proxy
+
+# --------------------
+# Anthropic / Claude
+# --------------------
+host-suffix, anthropic.com, proxy
+host-suffix, claude.ai, proxy
+
+# --------------------
+# Google Gemini
+# --------------------
+host-suffix, gemini.google.com, proxy
+host-suffix, aistudio.google.com, proxy
+host-suffix, generativelanguage.googleapis.com, proxy
+host-suffix, makersuite.google.com, proxy
+host-suffix, bard.google.com, proxy
+
+# --------------------
+# xAI / Grok
+# --------------------
+host-suffix, grok.com, proxy
+host-suffix, x.ai, proxy
+
+# --------------------
+# Manus
+# --------------------
+host-suffix, manus.im, proxy
+
+# --------------------
+# Perplexity
+# --------------------
+host-suffix, perplexity.ai, proxy
+
+# --------------------
+# Microsoft Copilot
+# --------------------
+host-suffix, copilot.microsoft.com, proxy
+host, sydney.bing.com, proxy
+
+# --------------------
+# Poe
+# --------------------
+host-suffix, poe.com, proxy
+
+# --------------------
+# Cursor
+# --------------------
+host-suffix, cursor.com, proxy
+host-suffix, cursor.sh, proxy
+
+# --------------------
+# GitHub Copilot
+# --------------------
+host-suffix, githubcopilot.com, proxy
+
+# --------------------
+# Hugging Face
+# --------------------
+host-suffix, huggingface.co, proxy
+
+# --------------------
+# Midjourney
+# --------------------
+host-suffix, midjourney.com, proxy
+
+# --------------------
+# Runway
+# --------------------
+host-suffix, runwayml.com, proxy
+
+# --------------------
+# Stability AI
+# --------------------
+host-suffix, stability.ai, proxy
+
+# --------------------
+# ElevenLabs
+# --------------------
+host-suffix, elevenlabs.io, proxy
+
+# --------------------
+# Replit AI
+# --------------------
+host-suffix, replit.com, proxy
+
+# --------------------
+# Windsurf / Codeium
+# --------------------
+host-suffix, windsurf.com, proxy
+host-suffix, codeium.com, proxy
+
+# --------------------
+# v0
+# --------------------
+host-suffix, v0.dev, proxy
+
+# --------------------
+# Lovable
+# --------------------
+host-suffix, lovable.dev, proxy
+
+# --------------------
+# Bolt
+# --------------------
+host-suffix, bolt.new, proxy
+
+# --------------------
+# Gamma
+# --------------------
+host-suffix, gamma.app, proxy
