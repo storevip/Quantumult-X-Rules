@@ -7,116 +7,131 @@
 # --------------------
 # OpenAI / ChatGPT
 # --------------------
-host-suffix, openai.com, proxy
-host-suffix, chatgpt.com, proxy
-host-suffix, oaistatic.com, proxy
-host-suffix, oaiusercontent.com, proxy
+host-suffix, openai.com, AI
+host-suffix, chatgpt.com, AI
+host-suffix, oaistatic.com, AI
+host-suffix, oaiusercontent.com, AI
 
 # --------------------
 # Anthropic / Claude
 # --------------------
-host-suffix, anthropic.com, proxy
-host-suffix, claude.ai, proxy
+host-suffix, anthropic.com, AI
+host-suffix, claude.ai, AI
+host-suffix, claude.com, AI
+host-suffix, claudeusercontent.com, AI
+host-suffix, clau.de, AI
+host, servd-anthropic-website.b-cdn.net, AI
 
 # --------------------
 # Google Gemini
 # --------------------
-host-suffix, gemini.google.com, proxy
-host-suffix, aistudio.google.com, proxy
-host-suffix, generativelanguage.googleapis.com, proxy
-host-suffix, makersuite.google.com, proxy
-host-suffix, bard.google.com, proxy
+host-suffix, gemini.google.com, AI
+host-suffix, aistudio.google.com, AI
+host-suffix, generativelanguage.googleapis.com, AI
+host-suffix, makersuite.google.com, AI
+host-suffix, bard.google.com, AI
 
 # --------------------
 # xAI / Grok
 # --------------------
-host-suffix, grok.com, proxy
-host-suffix, x.ai, proxy
+host-suffix, grok.com, AI
+host-suffix, x.ai, AI
 
 # --------------------
 # Manus
 # --------------------
-host-suffix, manus.im, proxy
+host-suffix, manus.im, AI
+
+# --------------------
+# Hermes Agent / Nous Research
+# Includes Hermes Agent, Nous Portal and Nous Tool Gateway
+# --------------------
+host-suffix, nousresearch.com, AI
+
+# --------------------
+# OpenRouter (Hermes Agent provider)
+# --------------------
+host-suffix, openrouter.ai, AI
 
 # --------------------
 # Perplexity
 # --------------------
-host-suffix, perplexity.ai, proxy
+host-suffix, perplexity.ai, AI
 
 # --------------------
 # Microsoft Copilot
 # --------------------
-host-suffix, copilot.microsoft.com, proxy
-host, sydney.bing.com, proxy
+host-suffix, copilot.microsoft.com, AI
+host, sydney.bing.com, AI
 
 # --------------------
 # Poe
 # --------------------
-host-suffix, poe.com, proxy
+host-suffix, poe.com, AI
 
 # --------------------
 # Cursor
 # --------------------
-host-suffix, cursor.com, proxy
-host-suffix, cursor.sh, proxy
+host-suffix, cursor.com, AI
+host-suffix, cursor.sh, AI
 
 # --------------------
 # GitHub Copilot
 # --------------------
-host-suffix, githubcopilot.com, proxy
+host-suffix, githubcopilot.com, AI
 
 # --------------------
 # Hugging Face
 # --------------------
-host-suffix, huggingface.co, proxy
+host-suffix, huggingface.co, AI
 
 # --------------------
 # Midjourney
 # --------------------
-host-suffix, midjourney.com, proxy
+host-suffix, midjourney.com, AI
 
 # --------------------
 # Runway
 # --------------------
-host-suffix, runwayml.com, proxy
+host-suffix, runwayml.com, AI
 
 # --------------------
 # Stability AI
 # --------------------
-host-suffix, stability.ai, proxy
+host-suffix, stability.ai, AI
 
 # --------------------
 # ElevenLabs
 # --------------------
-host-suffix, elevenlabs.io, proxy
+host-suffix, elevenlabs.io, AI
 
 # --------------------
 # Replit AI
 # --------------------
-host-suffix, replit.com, proxy
+host-suffix, replit.com, AI
 
 # --------------------
 # Windsurf / Codeium
 # --------------------
-host-suffix, windsurf.com, proxy
-host-suffix, codeium.com, proxy
+host-suffix, windsurf.com, AI
+host-suffix, codeium.com, AI
 
 # --------------------
 # v0
 # --------------------
-host-suffix, v0.dev, proxy
+host-suffix, v0.dev, AI
 
 # --------------------
 # Lovable
 # --------------------
-host-suffix, lovable.dev, proxy
+host-suffix, lovable.dev, AI
 
 # --------------------
 # Bolt
 # --------------------
-host-suffix, bolt.new, proxy
+host-suffix, bolt.new, AI
 
 # --------------------
 # Gamma
 # --------------------
-host-suffix, gamma.app, proxy
+host-suffix, gamma.app, AI
