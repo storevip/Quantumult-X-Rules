@@ -1,53 +1,88 @@
-# Quantumult X AI 分流规则
+# Quantumult X 海外 AI 分流规则
 
-一套适用于 **Quantumult X** 的通用 AI 分流方案，用于统一管理常见海外 AI 服务的网络访问。
+一套面向 **Quantumult X** 的海外 AI 精准分流方案。它把常用海外 AI 的官网、客户端、专用 API、静态资源和必要网络端点统一交给独立的 `AI` 策略组，同时尽量不影响普通 Google、GitHub、Microsoft、AWS、Cloudflare 或其他应用流量。
 
-支持不同机场、不同订阅以及不同节点命名方式，不依赖某一家机场，更换订阅后也可以继续使用。
+当前版本包含 **266 条规则**，覆盖 80 余个海外 AI 产品与相关服务。
 
----
+## 设计原则
 
-## 🤖 支持的 AI 服务
+- **仅分流海外 AI**：不包含 DeepSeek、Kimi、Qwen、GLM、MiniMax、豆包等中国大陆 AI。
+- **核心域名优先**：优先收录产品自有域名、专用 API、专用 CDN 和明确归属的网络段。
+- **低误伤**：不因为某个 AI 使用了公共第三方服务，就把整个第三方平台归入 AI。
+- **关键功能完整**：补齐 ChatGPT/Codex/Sora、Claude Code/MCP、Gemini/NotebookLM、Grok、GitHub Copilot、Amazon Q 等常用产品的关键端点。
+- **策略与规则分离**：规则持续远程更新，地区节点仍由用户在 `AI` 策略组中手动选择。
 
-目前主要覆盖：
+## 覆盖范围
 
-* ChatGPT / OpenAI
-* Claude / Anthropic
-* Gemini / Google AI
-* Grok / xAI
-* Manus
-* Perplexity
-* Microsoft Copilot
-* GitHub Copilot
-* Poe
-* Cursor
-* Hugging Face
-* Midjourney
-* Runway
-* Stability AI
-* ElevenLabs
-* Windsurf / Codeium
-* v0
-* Lovable
-* Bolt
-* Gamma
+| 类别 | 代表服务 |
+| --- | --- |
+| 核心助手 | ChatGPT、Claude、Gemini、Grok、Microsoft Copilot、GitHub Copilot |
+| 模型与 API | OpenAI API、Anthropic API、Google AI Studio、Mistral、Groq、Cohere、Cerebras、OpenRouter、Together AI、Fireworks AI、Replicate、DeepInfra、Novita AI |
+| AI 编程与 Agent | Codex、Claude Code、Cursor、Windsurf、Amazon Q、JetBrains AI、Cline、Continue、Sourcegraph Cody/Amp、Devin、Augment Code、CodeRabbit、Kiro、Kilo、v0、Bolt、Lovable、Replit、Tabnine、Zed |
+| 搜索与效率 | Perplexity、Poe、You.com、Genspark、Character.AI、Duck.ai、Meta AI、Pi、Manus、Gamma、Grammarly、Otter.ai、Jasper |
+| 图片与设计 | Midjourney、Adobe Firefly、FLUX、Stability AI、Ideogram、Leonardo AI、Recraft、OpenArt、Civitai、ClipDrop、ComfyUI |
+| 视频与音频 | Runway、Pika、Luma、HeyGen、Synthesia、Suno、Udio、ElevenLabs、Descript |
+| 开源与开发生态 | Hugging Face、Ollama、LM Studio、LangChain、CrewAI、Dify、LMArena、H2O.ai、Nous Research |
 
-后续会持续补充新的海外 AI 服务及相关域名。
+TRAE、Coze、MarsCode、Cici 和 Qoder 只收录其全球版/海外版核心域名；对应的中国版域名以及共享的字节跳动基础设施不在规则中。
 
----
+## 明确排除的中国大陆 AI
 
-## ✨ 功能特点
+本项目不会收录以下服务的中国大陆端点：
 
-* AI 流量统一交给独立的 `AI` 策略组
-* 支持美国、日本、台湾、新加坡、韩国节点
-* 自动根据节点名称、国家名称、国旗、英文缩写匹配节点
-* 不绑定特定机场或订阅
-* 更换机场或订阅后仍可继续使用
-* 支持手动选择 AI 使用地区
-* AI 域名规则支持 GitHub 远程更新
-* 无需每次手动重新复制 AI 域名
-* 配置结构简单，方便自行修改和扩展
+- DeepSeek
+- Kimi / Moonshot
+- 通义千问 / Qwen / 阿里云百炼
+- 智谱 AI / GLM / Z.ai
+- MiniMax / 海螺 AI
+- 豆包 / 火山方舟
+- 腾讯混元 / 元宝
+- 百度文心 / 千帆
+- 硅基流动、阶跃星辰、魔搭、PPIO、小米 MiMo
+- Coze、TRAE、MarsCode、Qoder 的中国版
 
-最终策略结构类似：
+如果你的其他规则把国内流量设为直连，这些服务会继续按照原有国内规则处理，不会被本项目送入 `AI` 策略组。
+
+## 为什么不直接照搬“大而全”规则
+
+很多 AI 产品会使用公共支付、登录、监控、客服或云存储平台。把这些平台的整个主域名加入 AI 规则，会导致大量无关 App 误走 AI 节点。
+
+因此，本项目不会使用下列宽泛规则：
+
+```text
+stripe.com
+auth0.com
+sentry.io
+intercom.io
+storage.googleapis.com
+api.cloudflare.com
+static.cloudflareinsights.com
+segment.io
+launchdarkly.com
+```
+
+对于确实专属于某个 AI 的租户或对象存储，只使用完整主机名，例如：
+
+```text
+anthropic.auth0.com
+openaiassets.blob.core.windows.net
+copilot-proxy.githubusercontent.com
+ppl-ai-file-upload.s3.amazonaws.com
+```
+
+这种方式能保留关键功能，又不会把整个 Auth0、Azure Blob、GitHubusercontent 或 Amazon S3 粗暴划入 AI。
+
+Cloudflare Workers AI 的公开 API 与普通 Cloudflare 管理 API 共用 `api.cloudflare.com`，Quantumult X 的域名规则无法按 URL 路径区分。因此本项目只收录 `ai.cloudflare.com`，不收录公共 API 主机；这是为了避免误伤而作出的明确取舍。
+
+## 使用方法
+
+### 1. 添加 AI 策略组
+
+打开 [`AI-Policy.conf`](./AI-Policy.conf)，将 `[policy]` 下方的内容复制到自己的 Quantumult X 配置 `[policy]` 区域。
+
+如果配置中已经存在 `[policy]`，不要重复复制这一行。
+
+默认策略结构为：
 
 ```text
 AI
@@ -55,356 +90,102 @@ AI
 ├── 🇯🇵 日本节点
 ├── 🇹🇼 台湾节点
 ├── 🇸🇬 新加坡节点
-├── 🇰🇷 韩国节点
-└── proxy
+└── 🇰🇷 韩国节点
 ```
 
-进入对应地区策略后，可以继续手动选择机场中自动匹配到的具体节点。
+每个地区组会根据节点名称中的国旗、中文名、英文名或常见缩写自动筛选节点。`AI` 不包含 Quantumult X 内置的 `proxy`，因此不会跟随全局代理选择一起变化。
 
----
+### 2. 添加远程规则
 
-# 📦 使用方法
-
-## 第一步：添加 AI 策略组
-
-打开仓库中的：
+在 Quantumult X 配置的 `[filter_remote]` 区域加入：
 
 ```text
-AI-Policy.conf
+https://raw.githubusercontent.com/storevip/Quantumult-X-Rules/main/AI.list, tag=Overseas AI Rules, force-policy=AI, enabled=true
 ```
 
-将其中 `[policy]` 下方的策略内容复制到你自己的 Quantumult X 配置文件中的：
+`AI.list` 每条规则本身已经带有 `AI` 策略，`force-policy=AI` 仍建议保留，这样即使以后调整规则文件，远程资源也会稳定使用同一个策略。
+
+### 3. 注意规则顺序
+
+Quantumult X 按顺序匹配，命中后停止。请将这份 AI 规则放在宽泛的 Google、GitHub、Microsoft、X/Twitter 和全球代理规则之前，确保以下专用端点不会先被普通服务规则截走：
 
 ```text
-[policy]
+Gemini / NotebookLM  → 普通 Google 之前
+GitHub Copilot       → 普通 GitHub 之前
+Grok                 → 普通 X/Twitter 之前
+Microsoft Copilot    → 普通 Microsoft/Bing 之前
 ```
 
-区域。
-
-### 注意
-
-如果你的 Quantumult X 配置中本身已经存在：
+推荐的总体顺序：
 
 ```text
-[policy]
-```
-
-请不要再次复制 `[policy]` 这一行。
-
-只需要复制其下方的策略组内容即可。
-
----
-
-## 第二步：添加 AI 远程分流规则
-
-GitHub 远程规则地址：
-
-```text
-https://raw.githubusercontent.com/storevip/Quantumult-X-Rules/main/AI.list
-```
-
-在 Quantumult X 配置文件的：
-
-```text
-[filter_remote]
-```
-
-区域中加入：
-
-```text
-https://raw.githubusercontent.com/storevip/Quantumult-X-Rules/main/AI.list, tag=AI Rules, force-policy=AI, enabled=true
-```
-
-其中：
-
-```text
-force-policy=AI
-```
-
-表示将这份远程规则匹配到的 AI 流量统一交给：
-
-```text
-AI
-```
-
-策略组管理。
-
----
-
-# 🌎 节点自动识别
-
-本项目会根据机场节点名称自动识别常见国家和地区节点。
-
-目前支持：
-
-```text
-🇺🇸 美国
-🇯🇵 日本
-🇹🇼 台湾
-🇸🇬 新加坡
-🇰🇷 韩国
-```
-
-例如机场存在：
-
-```text
-🇺🇸 美国 01
-美国-洛杉矶
-USA Premium
-US-01
-```
-
-这些节点会自动进入：
-
-```text
-🇺🇸 美国节点
-```
-
-如果存在：
-
-```text
-🇯🇵 日本东京
-Japan 01
-JP-02
-```
-
-则会自动进入：
-
-```text
-🇯🇵 日本节点
-```
-
-同理也会自动识别台湾、新加坡和韩国节点。
-
-节点匹配会尽量兼容：
-
-* 国旗 Emoji
-* 中文国家名称
-* 繁体中文名称
-* 英文国家名称
-* 常见英文缩写
-
-因此即使更换机场，只要节点名称包含常见地区标识，通常无需重新修改策略组。
-
----
-
-# 📂 文件说明
-
-## `AI.list`
-
-AI 服务域名分流规则。
-
-主要负责识别 ChatGPT、Claude、Gemini、Grok、Manus、Perplexity 等 AI 服务产生的网络请求。
-
----
-
-## `AI-Policy.conf`
-
-Quantumult X AI 策略组模板。
-
-负责创建：
-
-```text
-AI
-```
-
-以及：
-
-```text
-🇺🇸 美国节点
-🇯🇵 日本节点
-🇹🇼 台湾节点
-🇸🇬 新加坡节点
-🇰🇷 韩国节点
-```
-
-等策略组，并根据机场节点名称自动进行筛选。
-
----
-
-## `README.md`
-
-项目介绍及安装使用教程。
-
----
-
-## `LICENSE`
-
-本项目使用 MIT License。
-
----
-
-# 🔄 规则更新
-
-`AI.list` 采用 GitHub 远程规则方式加载。
-
-用户第一次配置完成后，后续如果本仓库增加新的 AI 服务或域名，只需要在 Quantumult X 中重新同步远程资源即可。
-
-无需重新复制整套 AI 分流规则。
-
-GitHub 主源：
-
-```text
-https://raw.githubusercontent.com/storevip/Quantumult-X-Rules/main/AI.list
-```
-
----
-
-# 🔐 隐私与安全
-
-本项目仅提供 Quantumult X 的 AI 分流规则与策略组模板。
-
-**不会收集、上传、记录或存储任何用户数据。**
-
-使用本项目：
-
-* 不需要提供 Quantumult X 私人配置文件
-* 不需要提供机场订阅地址
-* 不需要提供代理节点信息
-* 不需要提供节点密码
-* 不需要提供 OpenAI / ChatGPT 账号
-* 不需要提供 Claude 账号
-* 不需要提供 Gemini 账号
-* 不需要提供其他 AI 服务账号
-* 不需要提供 API Key
-* 不需要提供 Cookie
-* 不需要提供 Token
-* 不包含数据统计功能
-* 不包含用户追踪功能
-* 不包含广告
-* 不记录用户访问过哪些 AI 服务
-* 不会将用户流量发送到项目作者服务器
-
-本项目所有规则均公开托管于 GitHub，可以自行查看、检查和修改。
-
----
-
-## ⚠️ 安全提醒
-
-请勿将以下私人信息上传到 GitHub 或分享给其他人：
-
-* 机场订阅链接
-* 代理节点密码
-* 节点认证信息
-* API Key
-* Cookie
-* Token
-* 私人代理服务器信息
-* Quantumult X 完整私人配置
-* 各类账号密码
-* 其他个人敏感信息
-
-尤其需要注意：
-
-**机场订阅链接通常包含私人认证信息，请勿将自己的完整订阅地址上传到公开 GitHub 仓库。**
-
----
-
-# 🛡️ 工作原理
-
-本项目不会建立任何代理服务器。
-
-`AI.list` 仅用于告诉 Quantumult X：
-
-```text
-哪些域名属于 AI 服务
-```
-
-并将匹配到的流量交给：
-
-```text
-AI
-```
-
-策略组处理。
-
-实际网络连接依然由用户自己的：
-
-```text
-Quantumult X
+局域网 / 必须直连的应用
 ↓
-用户选择的代理节点
+海外 AI（本项目）
 ↓
-目标 AI 服务
+广告拦截
+↓
+普通 Google / GitHub / Microsoft / X / Telegram
+↓
+中国大陆域名与 IP 直连
+↓
+最终兜底策略
 ```
 
-完成。
+## ChatGPT Voice 与网络规则
 
-项目作者无法查看用户实际使用的代理节点、访问内容、账号信息或网络流量。
+除域名外，`AI.list` 还包含：
 
----
+- OpenAI 与 Anthropic 明确归属的 IPv4、IPv6 和 ASN 规则
+- OpenAI 官方 `chatgpt-voice.json` 当前列出的 ChatGPT Voice 专用 IP
+- 所有 IP 规则均使用 `no-resolve`，避免额外 DNS 查询
 
-# ⚠️ 免责声明
+ChatGPT Voice IP 会变化，仓库维护时应以 [OpenAI 官方实时文件](https://openai.com/chatgpt-voice.json) 为准。当前快照生成时间为 **2026-03-26**。
 
-本项目仅用于 Quantumult X 网络分流配置。
+## 文件说明
 
-不同 AI 服务可能存在：
+- [`AI.list`](./AI.list)：海外 AI 域名、专用 API/CDN、IP 与 ASN 分流规则。
+- [`AI-Policy.conf`](./AI-Policy.conf)：美国、日本、台湾、新加坡、韩国五个地区组及 `AI` 总策略模板。
+- [`README.md`](./README.md)：安装、覆盖范围、排除范围与设计取舍。
 
-* 地区限制
-* IP 地区限制
-* 节点质量要求
-* 风控策略
-* 账号地区限制
-* 服务可用地区限制
-* 网络环境检测
+## 更新与检查原则
 
-因此本项目只能负责：
+新增规则时应满足至少一项：
 
-**将对应 AI 服务的网络请求交给指定代理策略。**
+1. AI 服务自己的主域名或官方产品域名。
+2. 官方文档明确列出的 AI 专用端点。
+3. 能从主机名明确判断只服务于该 AI 的 API、CDN、上传或附件端点。
+4. 明确归属于 AI 提供商的网络段，且使用 `no-resolve`。
 
-不能保证某一个代理节点一定能够正常使用：
+下列情况原则上不加入：
 
-* ChatGPT
-* Claude
-* Gemini
-* Grok
-* Manus
-* Perplexity
-* 或其他 AI 服务
+1. 只有 URL 路径能区分 AI 与普通业务的共享主机。
+2. 支付、登录、监控、客服、分析或云存储平台的整个公共主域名。
+3. 大型云厂商、CDN 或托管商的宽泛 ASN/IP 段。
+4. 无法确认用途、归属或仍在使用的历史域名。
 
-如果某个 AI 服务无法正常访问，建议优先尝试更换：
+## 参考来源
 
-```text
-AI → 国家策略 → 具体节点
-```
+规则经过筛选、去重并按低误伤原则重新组织，主要参考：
 
-不同 AI 服务对代理 IP 的要求可能不同。
+- [OpenAI：ChatGPT 网络建议](https://help.openai.com/en/articles/9247338-network-recommendations-for-chatgpt-errors-on-web-and-apps)
+- [OpenAI：ChatGPT Voice IP](https://openai.com/chatgpt-voice.json)
+- [GitHub：Copilot allowlist reference](https://docs.github.com/en/copilot/reference/copilot-allowlist-reference)
+- [AWS：Amazon Q Developer firewall allowlist](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/firewall.html)
+- [VPSDance/ai-proxy-rules](https://github.com/VPSDance/ai-proxy-rules)
 
-本项目与 OpenAI、Anthropic、Google、xAI、Manus、Perplexity、Microsoft 等公司不存在任何官方关联。
+第三方规则来源的许可与声明见 [`THIRD-PARTY-NOTICES.md`](./THIRD-PARTY-NOTICES.md)。
 
-所有产品名称、商标及服务名称归其各自权利人所有。
+## 隐私、安全与免责声明
 
-使用本项目产生的网络访问行为由用户自行负责。
+本项目只提供 Quantumult X 规则和策略组模板，不建立代理服务器，不收集、上传或记录用户数据，也不需要订阅链接、节点密码、账号、API Key、Cookie 或 Token。
 
----
+请勿把机场订阅、节点认证信息、私人配置、API Key、Cookie、Token 或账号密码上传到公开仓库。
 
-# 📜 License
+规则只能决定流量交给哪个策略，不能保证代理节点一定满足某个 AI 的地区、IP 质量、账号地区或风控要求。如果服务无法使用，请先在 `AI → 地区策略 → 具体节点` 中更换节点。
 
-本项目采用：
+本项目与 OpenAI、Anthropic、Google、xAI、Microsoft、GitHub、Amazon 等公司不存在官方关联。产品名与商标归各自权利人所有。
 
-```text
-MIT License
-```
+## License
 
-允许在遵守许可证条款的前提下自由：
-
-* 使用
-* 复制
-* 修改
-* 分发
-
-本项目主要用于规则分享与学习交流。
-
----
-
-## ❤️ 关于项目
-
-如果发现某个 AI 服务无法正确分流，或者有新的 AI 服务需要添加，可以通过 GitHub Issue 提交反馈。
-
-后续会持续补充和维护 AI 服务域名。
-
----
-
-**一套规则，统一管理常用 AI 服务。**
-
-**不挑机场，换订阅也能继续使用。**
+本项目采用 [MIT License](./LICENSE)。

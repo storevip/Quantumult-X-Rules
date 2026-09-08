@@ -1,137 +1,335 @@
 # ==================================================
-# Quantumult X - AI Rules
+# Quantumult X - Overseas AI Rules
 # https://github.com/storevip/Quantumult-X-Rules
-# Overseas AI Services Routing Rules
+#
+# Design goals:
+# - Overseas AI only; Mainland China AI services are intentionally excluded.
+# - Prefer provider-owned domains and dedicated API/CDN endpoints.
+# - Avoid broad shared services such as stripe.com, auth0.com, sentry.io,
+#   intercom.io, storage.googleapis.com and api.cloudflare.com.
+# - Rules include the AI policy for direct use; force-policy=AI is also supported.
 # ==================================================
 
 # --------------------
-# OpenAI / ChatGPT
+# OpenAI / ChatGPT / Codex / Sora
 # --------------------
-host-suffix, openai.com, AI
+host-suffix, ai.com, AI
+host-suffix, chat.com, AI
 host-suffix, chatgpt.com, AI
+host-suffix, chatgpt.livekit.cloud, AI
+host-suffix, chatgpt.site, AI
 host-suffix, oaistatic.com, AI
 host-suffix, oaiusercontent.com, AI
+host-suffix, openai.com, AI
+host-suffix, oaistatsig.com, AI
+host-suffix, sora.com, AI
+host-suffix, cdn.openaimerge.com, AI
+host-suffix, openaiapi-site.azureedge.net, AI
+host-suffix, openaicom.imgix.net, AI
+host-suffix, openai.com.cdn.cloudflare.net, AI
+host, openai-api.arkoselabs.com, AI
+host, openaiassets.blob.core.windows.net, AI
+host, openaicom-api-bdcpf8c6d2e9atf6.z01.azurefd.net, AI
+host, openaicomproductionae4b.blob.core.windows.net, AI
+host, production-openaicom-storage.azureedge.net, AI
+host-keyword, chatgpt-async-webps-prod, AI
+
+# OpenAI-owned network ranges
+ip-cidr, 199.47.142.0/23, AI, no-resolve
+ip6-cidr, 2604:f20::/32, AI, no-resolve
+ip-asn, 401518, AI, no-resolve
+
+# ChatGPT Voice server IPs
+# Official snapshot: https://openai.com/chatgpt-voice.json (2026-03-26)
+ip-cidr, 4.151.200.38/32, AI, no-resolve
+ip-cidr, 4.155.146.196/32, AI, no-resolve
+ip-cidr, 4.197.172.116/32, AI, no-resolve
+ip-cidr, 4.217.235.100/32, AI, no-resolve
+ip-cidr, 4.245.198.13/32, AI, no-resolve
+ip-cidr, 13.71.25.29/32, AI, no-resolve
+ip-cidr, 20.74.221.21/32, AI, no-resolve
+ip-cidr, 20.162.96.163/32, AI, no-resolve
+ip-cidr, 20.168.48.117/32, AI, no-resolve
+ip-cidr, 20.184.36.134/32, AI, no-resolve
+ip-cidr, 20.203.144.245/32, AI, no-resolve
+ip-cidr, 40.118.236.137/32, AI, no-resolve
+ip-cidr, 51.4.112.173/32, AI, no-resolve
+ip-cidr, 52.143.181.161/32, AI, no-resolve
+ip-cidr, 68.155.152.41/32, AI, no-resolve
+ip-cidr, 72.146.20.246/32, AI, no-resolve
+ip-cidr, 74.248.148.7/32, AI, no-resolve
+ip-cidr, 102.37.57.54/32, AI, no-resolve
+ip-cidr, 135.220.40.201/32, AI, no-resolve
+ip-cidr, 172.203.39.49/32, AI, no-resolve
+ip-cidr, 172.207.173.200/32, AI, no-resolve
+ip-cidr, 172.214.226.198/32, AI, no-resolve
+ip-cidr, 191.233.251.27/32, AI, no-resolve
 
 # --------------------
-# Anthropic / Claude
+# Anthropic / Claude / Claude Code / MCP
 # --------------------
 host-suffix, anthropic.com, AI
-host-suffix, claude.ai, AI
-host-suffix, claude.com, AI
-host-suffix, claudeusercontent.com, AI
+host-suffix, antspace.dev, AI
 host-suffix, clau.de, AI
+host-suffix, claude.ai, AI
+host-suffix, claude.app, AI
+host-suffix, claude.com, AI
+host-suffix, claude.new, AI
+host-suffix, claude.site, AI
+host-suffix, claudepages.dev, AI
+host-suffix, claudemcpclient.com, AI
+host-suffix, claudemcpcontent.com, AI
+host-suffix, claudestudio.com, AI
+host-suffix, claudeusercontent.com, AI
+host-suffix, modelcontextprotocol.com, AI
+host-suffix, modelcontextprotocol.io, AI
+host-suffix, modelcontextprotocol.net, AI
+host-suffix, modelcontextprotocol.org, AI
+host, anthropic-com.ghost.io, AI
+host, anthropic.auth0.com, AI
+host, anthropic.com.cdn.cloudflare.net, AI
 host, servd-anthropic-website.b-cdn.net, AI
 
+# Anthropic-owned network ranges
+ip-cidr, 160.79.104.0/21, AI, no-resolve
+ip6-cidr, 2607:6bc0::/32, AI, no-resolve
+ip-asn, 399358, AI, no-resolve
+
 # --------------------
-# Google Gemini
+# Google AI / Gemini / AI Studio / NotebookLM
+# Jules / Flow / Labs / Opal / Stitch / Antigravity
 # --------------------
-host-suffix, gemini.google.com, AI
+host-suffix, ai.google.dev, AI
+host-suffix, ai.studio, AI
 host-suffix, aistudio.google.com, AI
-host-suffix, generativelanguage.googleapis.com, AI
-host-suffix, makersuite.google.com, AI
+host-suffix, antigravity.google, AI
+host-suffix, antigravity.google.com, AI
 host-suffix, bard.google.com, AI
+host-suffix, deepmind.com, AI
+host-suffix, deepmind.google, AI
+host-suffix, gemini.google, AI
+host-suffix, gemini.google.com, AI
+host-suffix, generativeai.google, AI
+host-suffix, generativelanguage.googleapis.com, AI
+host-suffix, notebooklm.google, AI
+host-suffix, notebooklm.google.com, AI
+host, alkalicore-pa.clients6.google.com, AI
+host, alkalimakersuite-pa.clients6.google.com, AI
+host, antigravity-pa.googleapis.com, AI
+host, antigravity.googleapis.com, AI
+host, cloudaicompanion.googleapis.com, AI
+host, cloudcode-pa.googleapis.com, AI
+host, daily-cloudcode-pa.googleapis.com, AI
+host, notebooklm-pa.googleapis.com, AI
+host, notebooklm.googleapis.com, AI
+host, webchannel-alkalimakersuite-pa.clients6.google.com, AI
+host-suffix, aicode.googleapis.com, AI
+host-suffix, aida.googleapis.com, AI
+host-suffix, aisandbox-pa.googleapis.com, AI
+host-suffix, antigravity-unleash.goog, AI
+host-suffix, flow.google, AI
+host-suffix, geller-pa.googleapis.com, AI
+host-suffix, gemini.gstatic.com, AI
+host-suffix, jules.google, AI
+host-suffix, jules.google.com, AI
+host-suffix, labs.google, AI
+host-suffix, labs.google.com, AI
+host-suffix, makersuite.google.com, AI
+host-suffix, notebook.google.com, AI
+host-suffix, opal.google, AI
+host-suffix, opal.google.com, AI
+host-suffix, proactivebackend-pa.googleapis.com, AI
+host-suffix, robinfrontend-pa.googleapis.com, AI
+host-suffix, stitch.withgoogle.com, AI
 
 # --------------------
 # xAI / Grok
 # --------------------
 host-suffix, grok.com, AI
+host-suffix, grok.x.com, AI
+host-suffix, grokipedia.com, AI
 host-suffix, x.ai, AI
 
 # --------------------
-# Manus
-# --------------------
-host-suffix, manus.im, AI
-
-# --------------------
-# Hermes Agent / Nous Research
-# Includes Hermes Agent, Nous Portal and Nous Tool Gateway
-# --------------------
-host-suffix, nousresearch.com, AI
-
-# --------------------
-# OpenRouter (Hermes Agent provider)
-# --------------------
-host-suffix, openrouter.ai, AI
-
-# --------------------
-# Perplexity
-# --------------------
-host-suffix, perplexity.ai, AI
-
-# --------------------
-# Microsoft Copilot
+# Microsoft Copilot / GitHub Copilot
+# Shared GitHub, Bing, Microsoft, telemetry and auth domains are not included.
 # --------------------
 host-suffix, copilot.microsoft.com, AI
+host-suffix, githubcopilot.com, AI
+host, copilot-proxy.githubusercontent.com, AI
+host, copilot-telemetry.githubusercontent.com, AI
+host, origin-tracker.githubusercontent.com, AI
+host, copilot-workspace.githubnext.com, AI
+host, copilotprodattachments.blob.core.windows.net, AI
+host, gateway.bingviz.microsoft.net, AI
+host, gateway.bingviz.microsoftapp.net, AI
 host, sydney.bing.com, AI
 
 # --------------------
-# Poe
+# Model APIs / Inference / Open-source ecosystems
 # --------------------
-host-suffix, poe.com, AI
+host-suffix, cerebras.ai, AI
+host-suffix, chutes.ai, AI
+host-suffix, cohere.ai, AI
+host-suffix, cohere.com, AI
+host-suffix, comfy.org, AI
+host-suffix, comfyregistry.org, AI
+host-suffix, crewai.com, AI
+host-suffix, deepinfra.com, AI
+host-suffix, dify.ai, AI
+host-suffix, fireworks.ai, AI
+host-suffix, groq.com, AI
+host-suffix, h2o.ai, AI
+host-suffix, hf.co, AI
+host-suffix, hf.space, AI
+host-suffix, huggingface.co, AI
+host-suffix, langchain.com, AI
+host-suffix, lmarena.ai, AI
+host-suffix, lmstudio.ai, AI
+host-suffix, mistral.ai, AI
+host-suffix, nousresearch.com, AI
+host-suffix, novita.ai, AI
+host-suffix, ollama.com, AI
+host-suffix, openrouter.ai, AI
+host-suffix, replicate.com, AI
+host-suffix, replicate.delivery, AI
+host-suffix, together.ai, AI
+host-suffix, together.xyz, AI
 
 # --------------------
-# Cursor
+# AI coding / Agents / Developer tools
 # --------------------
+
+# Amazon Q Developer - dedicated service endpoints only
+host, aws-language-servers.us-east-1.amazonaws.com, AI
+host, aws-toolkit-language-servers.amazonaws.com, AI
+host, client-telemetry.us-east-1.amazonaws.com, AI
+host, codewhisperer.us-east-1.amazonaws.com, AI
+host, idetoolkits-hostedfiles.amazonaws.com, AI
+host, idetoolkits.amazonwebservices.com, AI
+host, q-developer-integration.us-east-1.api.aws, AI
+host-suffix, q.eu-central-1.amazonaws.com, AI
+host-suffix, q.us-east-1.amazonaws.com, AI
+host, amazonq-code-scan-us-east-1-29121b44f7b.s3.amazonaws.com, AI
+host, amazonq-code-scan-eu-central-1-9374e402cc5.s3.amazonaws.com, AI
+host, amazonq-code-transformation-us-east-1-c6160f047e0.s3.amazonaws.com, AI
+host, amazonq-code-transformation-eu-central-1-a0a89cc2b94.s3.amazonaws.com, AI
+
+host-suffix, augmentcode.com, AI
+host-suffix, bolt.new, AI
+host-suffix, cline.bot, AI
+host-suffix, codeium.com, AI
+host-suffix, codeiumdata.com, AI
+host-suffix, coderabbit.ai, AI
+host-suffix, commandcode.ai, AI
+host-suffix, continue.dev, AI
+host-suffix, cursor-cdn.com, AI
 host-suffix, cursor.com, AI
 host-suffix, cursor.sh, AI
-
-# --------------------
-# GitHub Copilot
-# --------------------
-host-suffix, githubcopilot.com, AI
-
-# --------------------
-# Hugging Face
-# --------------------
-host-suffix, huggingface.co, AI
-
-# --------------------
-# Midjourney
-# --------------------
-host-suffix, midjourney.com, AI
-
-# --------------------
-# Runway
-# --------------------
-host-suffix, runwayml.com, AI
-
-# --------------------
-# Stability AI
-# --------------------
-host-suffix, stability.ai, AI
-
-# --------------------
-# ElevenLabs
-# --------------------
-host-suffix, elevenlabs.io, AI
-
-# --------------------
-# Replit AI
-# --------------------
-host-suffix, replit.com, AI
-
-# --------------------
-# Windsurf / Codeium
-# --------------------
-host-suffix, windsurf.com, AI
-host-suffix, codeium.com, AI
-
-# --------------------
-# v0
-# --------------------
-host-suffix, v0.dev, AI
-
-# --------------------
-# Lovable
-# --------------------
+host-suffix, cursorapi.com, AI
+host-suffix, devin.ai, AI
+host-suffix, diabrowser.com, AI
+host-suffix, diabrowser.engineering, AI
+host-suffix, eigent.ai, AI
+host-suffix, factory.ai, AI
+host-suffix, grazie.ai, AI
+host-suffix, grazie.aws.intellij.net, AI
+host-suffix, jetbrains.ai, AI
+host-suffix, kilo.ai, AI
+host-suffix, kilo.codes, AI
+host-suffix, kiro.dev, AI
 host-suffix, lovable.dev, AI
+host-suffix, openclaw.ai, AI
+host-suffix, opencode.ai, AI
+host-suffix, qoder.com, AI
+host-suffix, repl.co, AI
+host-suffix, repl.it, AI
+host-suffix, replit.app, AI
+host-suffix, replit.com, AI
+host-suffix, replit.dev, AI
+host-suffix, ampcode.com, AI
+host-suffix, ampworkers.com, AI
+host-suffix, cody.dev, AI
+host-suffix, sourcegraph.com, AI
+host-suffix, tabnine.com, AI
+host-suffix, v0.app, AI
+host-suffix, v0.dev, AI
+host-suffix, windsurf.build, AI
+host-suffix, windsurf.com, AI
+host-suffix, zed.dev, AI
 
 # --------------------
-# Bolt
+# AI search / Assistants / Productivity
 # --------------------
-host-suffix, bolt.new, AI
-
-# --------------------
-# Gamma
-# --------------------
+host-suffix, character.ai, AI
+host-suffix, duck.ai, AI
 host-suffix, gamma.app, AI
+host-suffix, genspark.ai, AI
+host-suffix, grammarly.com, AI
+host-suffix, inflection.ai, AI
+host-suffix, jasper.ai, AI
+host-suffix, manus.im, AI
+host-suffix, manuscdn.com, AI
+host, ai.meta.com, AI
+host-suffix, llama.com, AI
+host-suffix, meta.ai, AI
+host-suffix, otter.ai, AI
+host, ppl-ai-file-upload.s3.amazonaws.com, AI
+host, pplx-res.cloudinary.com, AI
+host-suffix, perplexity.ai, AI
+host-suffix, perplexity.com, AI
+host-suffix, pplx.ai, AI
+host-suffix, phind.com, AI
+host-suffix, pi.ai, AI
+host-suffix, poe.com, AI
+host-suffix, poecdn.net, AI
+host-suffix, you.com, AI
+host-suffix, youmind.ai, AI
+host-suffix, youmind.com, AI
+host-suffix, youmind.site, AI
+
+# --------------------
+# Image / Video / Audio / Creative AI
+# --------------------
+host-suffix, firefly.adobe.com, AI
+host-suffix, firefly.adobe.io, AI
+host-suffix, bfl.ai, AI
+host-suffix, civitai.com, AI
+host-suffix, clipdrop.co, AI
+host-suffix, descript.com, AI
+host-suffix, elevenlabs.com, AI
+host-suffix, elevenlabs.io, AI
+host-suffix, heygen.com, AI
+host-suffix, ideogram.ai, AI
+host-suffix, leonardo.ai, AI
+host-suffix, lovart.ai, AI
+host-suffix, lumalabs.ai, AI
+host-suffix, midjourney.com, AI
+host-suffix, openart.ai, AI
+host-suffix, pika.art, AI
+host-suffix, recraft.ai, AI
+host-suffix, runway.com, AI
+host-suffix, runwayml.com, AI
+host-suffix, stability.ai, AI
+host-suffix, suno.ai, AI
+host-suffix, suno.com, AI
+host-suffix, synthesia.io, AI
+host-suffix, udio.com, AI
+
+# --------------------
+# Cloudflare AI
+# The shared api.cloudflare.com host is intentionally excluded.
+# --------------------
+host-suffix, ai.cloudflare.com, AI
+
+# --------------------
+# Global editions of ByteDance AI products
+# China-only editions and shared ByteDance infrastructure are excluded.
+# --------------------
+host-suffix, cici.com, AI
+host-suffix, ciciai.com, AI
+host-suffix, ciciaicdn.com, AI
+host-suffix, coze.com, AI
+host-suffix, marscode.com, AI
+host, trae-api-sg.mchost.guru, AI
+host-suffix, trae.ai, AI
