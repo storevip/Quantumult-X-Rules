@@ -273,6 +273,7 @@ host-suffix, manuscdn.com, AI
 host, ai.meta.com, AI
 host-suffix, llama.com, AI
 host-suffix, meta.ai, AI
+host-suffix, muse.ai, AI
 host-suffix, otter.ai, AI
 host, ppl-ai-file-upload.s3.amazonaws.com, AI
 host, pplx-res.cloudinary.com, AI
