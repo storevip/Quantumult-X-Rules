@@ -274,6 +274,9 @@ host, ai.meta.com, AI
 host-suffix, llama.com, AI
 host-suffix, meta.ai, AI
 host-suffix, muse.ai, AI
+host, shortwave.facebook.com, AI
+host, hatch.metaaivm.com, AI
+host, hatch-api.meta.ai, AI
 host-suffix, otter.ai, AI
 host, ppl-ai-file-upload.s3.amazonaws.com, AI
 host, pplx-res.cloudinary.com, AI
