@@ -240,6 +240,7 @@ payload:
   - 'DOMAIN,ai.meta.com'
   - 'DOMAIN-SUFFIX,llama.com'
   - 'DOMAIN-SUFFIX,meta.ai'
+  - 'DOMAIN-SUFFIX,muse.ai'
   - 'DOMAIN-SUFFIX,otter.ai'
   - 'DOMAIN,ppl-ai-file-upload.s3.amazonaws.com'
   - 'DOMAIN,pplx-res.cloudinary.com'
